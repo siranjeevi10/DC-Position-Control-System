@@ -1,10 +1,19 @@
-# Stability Analysis using Root Locus
+# DC-Position-Control-System
+
 ## Aim:
-To analyse the stability of the system having open loop transfer function, G(S)=K/(S(S+5)(S+10)) using root locus and verify it using MATLAB. 
+
+To control the position of motor having the following specifications using MATLAB.<br>
+(J)     moment of inertia of the rotor =    3.2284E-6 kg.m^2<br>
+(b)     motor viscous friction constant =    3.5077E-6 N.m.s<br>
+(Ktf)    motor torque constant   =           0.0274 N.m/Amp<br>
+(R)     electric resistance  =              4 Ohm<br>
+(L)     electric inductance  =              2.75E-6H<br>
+
 ## Apparatus Required:
+
 Computer with MATLAB software
 
-## Theory:
+## Theory: 
 
 The speed of a DC motor is directly proportional to armature voltage and inversely proportional to flux. In field controlled DC motor the armature voltage is kept constant and the speed is varied by varying the flux of the machine. Since flux is directly proportional to field current, the flux is varied by varying field current. 
 
@@ -44,28 +53,36 @@ The equation (1) can be written as <br>
 <img width="646" height="75" alt="image" src="https://github.com/user-attachments/assets/0e712326-1320-4138-b17c-9346319fc1c5" /> <br>
 <img width="303" height="137" alt="image" src="https://github.com/user-attachments/assets/4cd5dc35-5ddd-4dc6-ae0d-9892c7b5bda2" /> <br>
 
-
 ## Procedure:
-	Open MATLAB software
-	Open a new script file.
-	Type the program.
-	Save and Execute the program.
-	Click on the crossing point of the root locus to find the value of K and poles at the crossing point.
-	From the value of K, analyse the stability.
+1.	Open MATLAB software
+2.	Open a new script file.
+3.	Type the program.
+4.	Save and Execute the program.
+5.	Analyse the output in open loop and closed loop.
 
-## Program: 
+## Program
 
 ```
-num=[1]
-den=[1 15 50 0]
-sys=tf(num,den)
-rlocus(sys)
-[k poles]=rlocfind(sys)
+Kt=0.024
+J=3.2284e-6
+B=3.5077e-6
+Rf=4
+Lf=2.75e-6
+s=tf('s')
+ol_sys=Kt/((J*s^2+B*s)*(Lf*s+Rf))
+subplot(2,1,1)
+step(ol_sys)
+title('open loop response')
+cl_sys=feedback(ol_sys,1)
+subplot(2,1,2)
+step(cl_sys)
+title('closed loop response')
 ```
 
-## Output:
+## Output
 
-<img width="699" height="626" alt="image" src="https://github.com/user-attachments/assets/efb210b9-801d-4a1a-b603-66c56093cb8b" />
+<img width="692" height="626" alt="image" src="https://github.com/user-attachments/assets/2cccd701-5444-455d-bc5b-6b5ae3149227" />
 
-## Result:
-Thus the root locus for the given transfer function was drawn and verified using MATLAB. The conditions for stability is 744.551 .
+## Result
+
+Thus, the position of dc motor is controlled using MATLAB. 
